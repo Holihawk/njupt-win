@@ -1,0 +1,50 @@
+{
+  "name": "njupt-win",
+  "version": "0.0.1",
+  "description": "南京邮电大学公开信息检索与 RAG 问答平台",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -H 0.0.0.0",
+    "build": "next build",
+    "start": "next start -H 0.0.0.0",
+    "crawl": "node --env-file=.env --import tsx src/cli.ts",
+    "summarize": "node --env-file=.env --import tsx scripts/summarize-notices.ts",
+    "refresh:notices": "node --env-file=.env --import tsx scripts/refresh-notices.ts",
+    "refresh:install-timer": "bash scripts/install-refresh-timer.sh",
+    "db:migrate": "node --env-file=.env --import tsx scripts/db-migrate.ts",
+    "db:import-json": "node --env-file=.env --import tsx scripts/import-json.ts",
+    "db:import-njuptnavi": "node --env-file=.env --import tsx scripts/import-njuptnavi.ts",
+    "attachments:parse": "node --env-file=.env --import tsx scripts/parse-attachments.ts",
+    "chunks:rebuild": "node --env-file=.env --import tsx scripts/rebuild-chunks.ts",
+    "chunks:embed": "node --env-file=.env --import tsx scripts/embed-chunks.ts",
+    "test:apikey": "node --env-file=.env --import tsx scripts/test-api-key.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "cheerio": "^1.2.0",
+    "exceljs": "^4.4.0",
+    "mammoth": "^1.12.0",
+    "next": "^16.2.7",
+    "pdf-parse": "^2.4.5",
+    "pg": "^8.21.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.2",
+    "@types/pg": "^8.20.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.8"
+  },
+  "overrides": {
+    "postcss": "^8.5.10"
+  }
+}

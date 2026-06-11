@@ -1,0 +1,10 @@
+[Unit]
+Description=njupt.win incremental notice crawl and AI summary refresh
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/njupt-win
+ExecStart=/usr/bin/flock -n %h/njupt-win/data/notice-refresh.lock npm run refresh:notices
+Environment=NODE_ENV=production

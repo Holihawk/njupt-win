@@ -1,0 +1,25 @@
+{
+  "changed": false,
+  "crawl": {
+    "startedAt": "2026-06-11T05:05:55.056Z",
+    "finishedAt": "2026-06-11T05:06:05.986Z",
+    "created": 0,
+    "updated": 0,
+    "skipped": 28,
+    "failed": 0,
+    "archived": 0,
+    "sources": {
+      "njupt-jwc": {
+        "listed": 14,
+        "pages": 13,
+        "attachments": 1
+      },
+      "njupt-main": {
+        "listed": 14,
+        "pages": 14,
+        "attachments": 0
+      }
+    }
+  },
+  "summary": null
+}

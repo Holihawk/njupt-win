@@ -1,0 +1,22 @@
+{
+  "events": [
+    {
+      "id": "cet-2026-06",
+      "title": "英语四、六级笔试",
+      "shortTitle": "四六级",
+      "date": "2026-06-13",
+      "type": "exam",
+      "visible": true,
+      "sourceUrl": "https://cet.neea.edu.cn/"
+    },
+    {
+      "id": "postgraduate-exam-2026",
+      "title": "2027 年全国硕士研究生招生考试初试",
+      "shortTitle": "考研初试",
+      "date": "2026-12-20",
+      "type": "exam",
+      "visible": true,
+      "sourceUrl": "https://yz.chsi.com.cn/"
+    }
+  ]
+}

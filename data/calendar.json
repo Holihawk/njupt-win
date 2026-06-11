@@ -1,0 +1,20 @@
+{
+  "terms": [
+    {
+      "name": "2025-2026 学年第二学期",
+      "startDate": "2026-03-02",
+      "endDate": "2026-07-05",
+      "teachingWeeks": 18,
+      "nextTermStartDate": "2026-08-31",
+      "sourceUrl": "https://jwc.njupt.edu.cn/2025/0904/c1528a288083/page.htm"
+    },
+    {
+      "name": "2026-2027 学年第一学期",
+      "startDate": "2026-08-31",
+      "endDate": "2027-01-24",
+      "teachingWeeks": 20,
+      "nextTermStartDate": "2027-03-01",
+      "sourceUrl": "https://jwc.njupt.edu.cn/2025/0904/c1528a288083/page.htm"
+    }
+  ]
+}

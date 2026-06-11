@@ -1,0 +1,12 @@
+[Unit]
+Description=Run njupt.win notice refresh twice daily
+
+[Timer]
+OnCalendar=*-*-* 08:00:00 Asia/Shanghai
+OnCalendar=*-*-* 20:00:00 Asia/Shanghai
+Persistent=true
+RandomizedDelaySec=5m
+Unit=njupt-notice-refresh.service
+
+[Install]
+WantedBy=timers.target
