@@ -2,6 +2,7 @@
 
 import type { CSSProperties, FormEvent } from "react";
 import { useEffect, useState } from "react";
+import { RiCalendarCloseFill, RiCalendarCloseLine, RiCalendarEventFill } from "react-icons/ri";
 import type { CalendarStatus } from "../src/calendar";
 import {
   createPersonalReminder,
@@ -72,7 +73,7 @@ export function CalendarCard({ status }: { status: CalendarStatus | null }) {
           onClick={() => setEditing((value) => !value)}
           type="button"
         >
-          <img alt="" height="24" src="/iamges/folder-settings-line.png" width="24" />
+          <RiCalendarEventFill aria-hidden="true" />
         </button>
       </div>
       <h2>{status.title}</h2>
@@ -119,7 +120,10 @@ export function CalendarCard({ status }: { status: CalendarStatus | null }) {
               <b>{formatReminderDays(daysUntilReminder(reminder.date))}</b>
               {editing && (
                 <button aria-label={`删除${reminder.title}`} onClick={() => removeReminder(reminder.id)} type="button">
-                  ×
+                  <span aria-hidden="true" className="icon-swap">
+                    <span className="icon-line"><RiCalendarCloseLine /></span>
+                    <span className="icon-fill"><RiCalendarCloseFill /></span>
+                  </span>
                 </button>
               )}
             </div>

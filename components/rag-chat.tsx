@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { RiSendPlaneFill, RiSendPlaneLine, RiStopCircleFill, RiStopCircleLine } from "react-icons/ri";
 import type { HybridSearchResult } from "../src/hybrid-search";
 import type { RagMessage } from "../src/rag";
 import { SearchResults } from "./search-results";
@@ -131,11 +132,11 @@ export function RagChat({ enabled, initialQuestion = "" }: { enabled: boolean; i
         />
         {pending ? (
           <button aria-label="停止生成" className="rag-icon-button rag-stop-button" onClick={stop} type="button">
-            <img alt="" src="/iamges/stop-circle-line.png" />
+            <IconSwap fill={<RiStopCircleFill />} line={<RiStopCircleLine />} />
           </button>
         ) : (
           <button aria-label={standalone ? "追问" : "提问"} className="rag-icon-button" disabled={!enabled} type="submit">
-            <img alt="" src="/iamges/telegram-2-line.png" />
+            <IconSwap fill={<RiSendPlaneFill />} line={<RiSendPlaneLine />} />
           </button>
         )}
       </form>
@@ -168,6 +169,15 @@ export function RagChat({ enabled, initialQuestion = "" }: { enabled: boolean; i
         </div>
       )}
     </section>
+  );
+}
+
+function IconSwap({ fill, line }: { fill: React.ReactNode; line: React.ReactNode }) {
+  return (
+    <span aria-hidden="true" className="icon-swap">
+      <span className="icon-line">{line}</span>
+      <span className="icon-fill">{fill}</span>
+    </span>
   );
 }
 
