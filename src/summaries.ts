@@ -20,15 +20,42 @@ export const noticeCategoryMeta: Record<
   NoticeCategory,
   { label: string; tone: string; pattern: RegExp }
 > = {
-  考试: { label: "考试", tone: "red", pattern: /考试|四六级|考场|准考证|成绩|补考|重修/ },
-  教务: { label: "教务", tone: "blue", pattern: /教务|课程|教学|选课|转专业|学位|培养方案|专业建设/ },
-  活动: { label: "活动", tone: "yellow", pattern: /活动|讲座|沙龙|展览|征集|访学|交流项目|校园文化/ },
-  竞赛: { label: "竞赛", tone: "pink", pattern: /竞赛|比赛|作品遴选|创新实验班/ },
-  科研: { label: "科研", tone: "purple", pattern: /科研|研究项目|课题|科技成果|学术/ },
-  就业: { label: "就业", tone: "green", pattern: /就业|招聘|创业|实习|资助项目/ },
-  校园事务: { label: "校园事务", tone: "orange", pattern: /交通|安全|后勤|巡察|放假|校园事务|体质|专项行动/ },
+  考试: { label: "考试", tone: "red", pattern: /考试|四六级|考场|准考证|补考|重修|成绩查询|封楼|封闭.*教学楼/ },
+  教务: {
+    label: "教务",
+    tone: "blue",
+    pattern: /教务|课程|教学(?!楼)|选课|转专业|学位|培养方案|专业建设|教材|教改|慕课|课表|创新实验班|录播|直播/,
+  },
+  活动: {
+    label: "活动",
+    tone: "yellow",
+    pattern: /活动|讲座|沙龙|展览|征集|访学|交流项目|校园文化|奖学金项目|志愿服务|社团/,
+  },
+  竞赛: { label: "竞赛", tone: "pink", pattern: /竞赛|比赛|作品遴选/ },
+  科研: {
+    label: "科研",
+    tone: "purple",
+    pattern: /科研|研究项目|课题|科技成果|学术|思想政治.*项目|思政.*项目|项目立项/,
+  },
+  就业: { label: "就业", tone: "green", pattern: /就业|招聘|创业基金|实习|资助项目/ },
+  校园事务: {
+    label: "校园事务",
+    tone: "orange",
+    pattern: /交通|安全|后勤|巡察|放假|校园事务|专项行动|体质|体测|体检|晨跑|校车|校园网|校园卡|学生证|宿舍|食堂|快递|图书馆|校区地图|校区介绍|周边设施|学生社区|学生事务|新生报到/,
+  },
   其他: { label: "其他", tone: "gray", pattern: /$a/ },
 };
+
+/** 标题同时包含多个主题时，优先采用更具体、更影响用户行动的类别。 */
+const classificationPriority: NoticeCategory[] = [
+  "考试",
+  "校园事务",
+  "竞赛",
+  "教务",
+  "活动",
+  "就业",
+  "科研",
+];
 
 export type NoticeSummary = {
   documentUrl: string;
@@ -57,31 +84,36 @@ export function hasLlmConfig(): boolean {
 export function localSummary(document: Document, now = new Date()): NoticeSummary {
   const source = document.content.trim() || attachmentContext(document);
   const combined = `${document.title} ${source}`;
+  const keywords = detectKeywords(combined);
   return {
     documentUrl: document.url,
     documentHash: document.hash,
     title: document.title,
     summary: compactSummary(summarizeText(source, document.title)),
-    category: classifyNotice(combined),
+    category: classifyNotice(document.title, keywords),
     audience: detectAudience(combined),
     importance: detectImportance(combined),
     deadline: detectDeadline(combined),
-    keywords: detectKeywords(combined),
+    keywords,
     provider: "local",
     generatedAt: now.toISOString(),
   };
 }
 
 /**
- * 根据标题、正文和关键词进行确定性分类。
+ * 根据标题和模型分类进行确定性分类。
  *
- * 规则顺序即优先级，例如包含“考试”的教务通知优先归为考试，
- * 包含“比赛”的教学通知优先归为竞赛，以降低用户识别成本。
+ * 标题是最可靠的分类依据；模型返回合法类别时作为回退。
+ * 不扫描整篇正文，避免其中偶然出现“考试、比赛、教学”等词导致跨主题误判。
  */
-export function classifyNotice(value: string, keywords: string[] = []): NoticeCategory {
-  const searchable = `${value} ${keywords.join(" ")}`;
-  return noticeCategories.find((category) => noticeCategoryMeta[category].pattern.test(searchable))
-    ?? "其他";
+export function classifyNotice(
+  title: string,
+  _keywords: string[] = [],
+  modelCategory: NoticeCategory = "其他",
+): NoticeCategory {
+  const titleCategory = matchCategory(title);
+  if (titleCategory !== "其他") return titleCategory;
+  return modelCategory;
 }
 
 /** 返回标签展示元数据，供组件使用同一套名称和颜色语义。 */
@@ -260,3 +292,9 @@ type SummaryRow = {
   provider: "local" | "llm";
   generated_at: Date | string;
 };
+
+function matchCategory(value: string): NoticeCategory {
+  const normalized = value.replace(/^(?:【[^】]+】\s*)+/, "");
+  return classificationPriority.find((category) => noticeCategoryMeta[category].pattern.test(normalized))
+    ?? "其他";
+}

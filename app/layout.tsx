@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "njupt.win",
   description: "南邮公开通知与校历信息",
   icons: {
-    icon: "/iamges/Wheelchair 2.png",
+    icon: "/images/Wheelchair 2.png",
   },
 };
 
@@ -38,7 +38,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <header className="site-header">
           <Link className="brand" href="/">
-            <img alt="" height="42" src="/iamges/Wheelchair 2.png" width="42" />
+            <img alt="" height="42" src="/images/Wheelchair 2.png" width="42" />
             <span>njupt.win</span>
           </Link>
           <SiteNavigation />

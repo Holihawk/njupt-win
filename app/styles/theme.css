@@ -5,7 +5,7 @@
   --page-background: #dfe2ed;
   --aurora-background:
     linear-gradient(180deg, rgba(238, 240, 247, .35), rgba(222, 225, 237, .68)),
-    url("/iamges/Bocchi-the-Rock!-anime-fandoms-8048076.jpeg") center / cover no-repeat;
+    url("/images/Bocchi-the-Rock!-anime-fandoms-8048076.jpeg") center / cover no-repeat;
   --aurora-opacity: 1;
   --ink: #172038;
   --text-body: #30394d;
@@ -107,6 +107,6 @@
   :root[data-theme="rain"] {
     --aurora-background:
       linear-gradient(180deg, rgba(241, 240, 248, .25), rgba(224, 225, 237, .62)),
-      url("/iamges/Bocchi-the-Rock!-anime-fandoms-mov.png") center top / cover no-repeat;
+      url("/images/Bocchi-the-Rock!-anime-fandoms-mov.png") center top / cover no-repeat;
   }
 }

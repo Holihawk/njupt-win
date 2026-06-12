@@ -65,6 +65,14 @@ describe("notice queries", () => {
     expect(classifyNotice("大学英语四六级考试安排")).toBe("考试");
     expect(classifyNotice("本科生选课通知")).toBe("教务");
     expect(classifyNotice("校园科技工作者沙龙")).toBe("活动");
-    expect(classifyNotice("微课教学", ["作品遴选", "比赛"])).toBe("竞赛");
+    expect(classifyNotice("微课教学比赛", ["作品遴选", "比赛"])).toBe("竞赛");
+  });
+
+  it("prioritizes strong title signals and avoids incidental content keywords", () => {
+    expect(classifyNotice("关于仙林校区实施临时交通管制的通知", ["考试"])).toBe("校园事务");
+    expect(classifyNotice("2026-2027学年第一学期学生选课通知", ["考试", "重修"])).toBe("教务");
+    expect(classifyNotice("【教务管理办公室】关于部分教学楼封楼的通知", [], "教务")).toBe("考试");
+    expect(classifyNotice("C/C++ 开发环境", ["考试"])).toBe("其他");
+    expect(classifyNotice("普通通知", [], "科研")).toBe("科研");
   });
 });

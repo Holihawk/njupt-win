@@ -47,9 +47,11 @@ export async function summarizeNotices(options: SummaryBatchOptions = {}): Promi
     ) {
       summaries.push({
         ...previous,
+        // 已有摘要按标题重新分类；NAVI 指南不复用旧标签，避免历史正文中的偶发词继续污染分类。
         category: classifyNotice(
-          `${document.title} ${document.content} ${previous.summary}`,
+          document.title,
           previous.keywords,
+          document.sourceId === "njupt-navi" ? "其他" : previous.category,
         ),
       });
       skipped += 1;

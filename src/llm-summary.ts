@@ -78,8 +78,9 @@ function validateModelOutput(value: Partial<ModelOutput>, document: Document): M
     ? value.keywords.filter((item): item is string => typeof item === "string").slice(0, 6)
     : [];
   const category = classifyNotice(
-    `${document.title} ${document.content} ${modelCategory}`,
+    document.title,
     keywords,
+    modelCategory,
   );
   if (typeof value.summary !== "string" || value.summary.trim().length < 10) {
     throw new Error("LLM summary is invalid");
