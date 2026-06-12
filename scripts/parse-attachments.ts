@@ -9,6 +9,7 @@ import { USER_AGENT } from "../src/crawler/utils.js";
 const parserVersion = "attachment-parser-v1";
 const limitArg = process.argv.find((value) => value.startsWith("--limit="));
 const limit = limitArg ? Number(limitArg.split("=")[1]) : 20;
+if (!Number.isInteger(limit) || limit < 1) throw new Error("--limit must be a positive integer");
 
 const candidates = await getPool().query<{
   id: number;
@@ -83,12 +84,13 @@ for (const attachment of candidates.rows) {
     else parsed += 1;
   } catch (error) {
     failed += 1;
+    const message = errorMessage(error);
     await getPool().query(
       `UPDATE attachments SET parse_status='failed', error=$2, parsed_at=now()
        WHERE id=$1`,
-      [attachment.id, (error as Error).message],
+      [attachment.id, message],
     );
-    console.error(`[attachment failed] ${attachment.url}: ${(error as Error).message}`);
+    console.error(`[attachment failed] ${attachment.url}: ${message}`);
   }
 }
 
@@ -97,12 +99,28 @@ await getPool().end();
 
 /** 下载附件并返回 Buffer；解析脚本只处理公开附件 URL。 */
 async function downloadAttachment(url: string): Promise<Buffer> {
-  const response = await fetch(url, {
-    headers: { "user-agent": USER_AGENT },
-    signal: AbortSignal.timeout(30_000),
-  });
-  if (!response.ok) throw new Error(`HTTP ${response.status}`);
-  return Buffer.from(await response.arrayBuffer());
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    try {
+      const response = await fetch(url, {
+        headers: {
+          accept: "*/*",
+          referer: new URL("/", url).toString(),
+          "user-agent": USER_AGENT,
+        },
+        signal: AbortSignal.timeout(60_000),
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status} ${response.statusText}`);
+      return Buffer.from(await response.arrayBuffer());
+    } catch (error) {
+      lastError = error;
+      if (attempt < 3) {
+        console.warn(`[attachment retry ${attempt}/3] ${url}: ${errorMessage(error)}`);
+        await new Promise((resolve) => setTimeout(resolve, attempt * 2_000));
+      }
+    }
+  }
+  throw new Error(`download failed after 3 attempts: ${errorMessage(lastError)}`);
 }
 
 async function saveAttachmentFile(file: Buffer, fileHash: string, fileType: string | null): Promise<string> {
@@ -208,4 +226,15 @@ function fileTypeFromUrl(value: string): string | null {
 
 function normalizeParsedText(value: string): string {
   return value.replace(/\u00a0/g, " ").replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim();
+}
+
+function errorMessage(error: unknown): string {
+  if (!(error instanceof Error)) return String(error);
+  const messages = [error.message];
+  let cause = error.cause;
+  while (cause instanceof Error) {
+    messages.push(cause.message);
+    cause = cause.cause;
+  }
+  return [...new Set(messages)].join(": ");
 }
