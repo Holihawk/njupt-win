@@ -1,0 +1,73 @@
+/* 全站交互动效、进入动画与减少动态效果适配。 */
+button:not(:disabled):active,
+.button-secondary:active {
+  transform: scale(.95);
+}
+
+@keyframes progress-shine {
+  0%, 40% { transform: translateX(-120%); }
+  75%, 100% { transform: translateX(130%); }
+}
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes card-enter {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes progress-grow {
+  from { clip-path: inset(0 100% 0 0 round 999px); }
+  to { clip-path: inset(0 calc(100% - var(--progress)) 0 0 round 999px); }
+}
+@keyframes search-focus-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 0 3px rgba(215, 91, 103, .13),
+      0 0 18px rgba(188, 102, 141, .2);
+  }
+  33% {
+    box-shadow:
+      0 0 0 3px rgba(186, 132, 45, .13),
+      0 0 20px rgba(66, 104, 204, .2);
+  }
+  66% {
+    box-shadow:
+      0 0 0 3px rgba(66, 104, 204, .14),
+      0 0 20px rgba(215, 91, 103, .18);
+  }
+}
+@keyframes rag-winning {
+  0% { box-shadow: 0 0 0 0 rgba(66,104,204,.42); opacity: 1; }
+  100% { box-shadow: 0 0 0 8px rgba(66,104,204,0); opacity: .45; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .summary-panel:hover,
+  .notice-card:hover {
+    transform: translateY(-2px);
+    background: var(--glass-strong);
+    box-shadow: var(--shadow-card-hover);
+    backdrop-filter: var(--backdrop-strong);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .brand, .rag-entry .rag-form, .summary-panel, .calendar-card, .progress-fill {
+    animation: none !important;
+  }
+  .summary-panel:hover,
+  .notice-card:hover,
+  .search-form button:hover,
+  button:not(:disabled):active,
+  .button-secondary:active {
+    transform: none;
+  }
+  .search-form input:focus-visible { animation: none; }
+}

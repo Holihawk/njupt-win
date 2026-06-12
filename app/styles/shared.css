@@ -1,0 +1,86 @@
+/* 页面通用排版、表单、按钮和共享容器。 */
+main { padding: 70px 0 80px; }
+
+.hero {
+  width: 100%;
+  margin-bottom: 54px;
+  padding: 34px;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--glass);
+  box-shadow: var(--shadow-page);
+  backdrop-filter: var(--backdrop-card);
+}
+
+h1 {
+  margin: 8px 0 16px;
+  font-size: clamp(38px, 6vw, 66px);
+  line-height: 1.08;
+  letter-spacing: -.045em;
+  text-shadow: 0 5px 20px rgba(255, 255, 255, .8);
+}
+
+h1 span { display: inline; }
+.tone-red { color: var(--red); }
+.tone-yellow { color: var(--yellow); }
+.tone-blue { color: var(--blue); }
+.tone-pink { color: var(--pink); }
+
+h2, h3, p { margin-top: 0; }
+.hero > p:not(.eyebrow), .muted { color: var(--muted); }
+.eyebrow {
+  margin-bottom: 8px;
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.search-form { display: flex; gap: 10px; margin-top: 28px; }
+.sticky-search {
+  position: sticky;
+  z-index: 12;
+  top: 12px;
+  margin: 0 0 22px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--glass);
+  box-shadow: 0 12px 32px rgba(54, 58, 85, .14);
+  backdrop-filter: var(--backdrop-card);
+}
+.sticky-search .search-form { margin-top: 0; }
+.sticky-search-alone { margin-top: 0; }
+.search-form input {
+  min-width: 0;
+  flex: 1;
+  padding: 15px 17px;
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  outline: none;
+  background: var(--surface-input);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .7);
+  color: var(--ink);
+  font: inherit;
+  transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
+}
+.search-form input:focus-visible {
+  border-color: rgba(188, 102, 141, .52);
+  background: var(--surface-input-focus);
+  animation: search-focus-glow 2.4s ease-in-out infinite;
+}
+.search-form button {
+  padding: 0 25px;
+  border: 1px solid rgba(255, 255, 255, .62);
+  border-radius: 14px;
+  background: linear-gradient(135deg, #496ecf, #b76e9b);
+  box-shadow: 0 10px 24px rgba(70, 86, 155, .25);
+  color: white;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.search-form button:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(70, 86, 155, .31); }
+button, .button-secondary { transform-origin: center; }

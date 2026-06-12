@@ -1,0 +1,50 @@
+/* 混合检索结果及图片、附件证据卡片。 */
+.smart-results { display: grid; gap: 14px; }
+.smart-result-card {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--glass);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: var(--backdrop-card);
+}
+.smart-result-card h3 { margin: 12px 0 10px; font-size: 18px; line-height: 1.5; }
+.smart-result-card p { color: var(--text-body); font-size: 14px; line-height: 1.7; }
+.smart-result-card > a {
+  color: var(--blue);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.evidence-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: 14px 0;
+}
+.evidence-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  padding: 8px 10px;
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 13px;
+  background: var(--surface);
+  text-decoration: none;
+}
+.evidence-chip img {
+  width: 48px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.evidence-chip span { display: grid; gap: 2px; min-width: 0; }
+.evidence-chip strong { font-size: 12px; }
+.evidence-chip small {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

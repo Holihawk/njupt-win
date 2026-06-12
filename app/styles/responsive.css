@@ -1,0 +1,45 @@
+/* 平板与手机端布局覆盖。 */
+@media (max-width: 800px) {
+  main { padding-top: 46px; }
+  .top-dashboard { grid-template-columns: 1fr; }
+  .calendar-card { position: static; grid-row: 2; }
+  .notice-section { width: 100%; }
+  .about-features ul { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 520px) {
+  .site-header { top: 8px; height: 60px; margin-top: 8px; padding: 0 10px; border-radius: 17px; }
+  .brand img { width: 38px; height: 38px; }
+  .brand span { display: none; }
+  nav { gap: 2px; font-size: 13px; }
+  nav a { padding: 8px 9px; }
+  .theme-switcher summary { padding: 8px 9px; }
+  .theme-label { display: none; }
+  .theme-menu { right: -44px; }
+  main { width: min(100% - 22px, 1120px); padding-bottom: 52px; }
+  .hero, .search-page, .about-page { padding: 24px 18px; border-radius: 22px; }
+  .hero { margin-bottom: 34px; }
+  h1 { font-size: 40px; }
+  .search-form { flex-direction: column; }
+  .search-form button { padding: 14px; }
+  .sticky-search { position: static; margin: -16px 0 34px; padding: 0; border: 0; background: transparent; box-shadow: none; backdrop-filter: none; }
+  .top-dashboard { margin-bottom: 24px; }
+  .summary-panel { padding: 18px 16px; }
+  .summary-heading { align-items: start; flex-direction: column; gap: 3px; }
+  .summary-list a { grid-template-columns: auto minmax(0, 1fr); }
+  .summary-list small { display: none; }
+  .notice-meta, .progress-label { flex-direction: column; gap: 5px; }
+  .calendar-card { padding: 23px 20px; }
+  .reminder-form { grid-template-columns: 1fr 1fr; }
+  .reminder-form input:first-child { grid-column: 1 / -1; }
+  .admin-form-grid { grid-template-columns: 1fr; }
+  .admin-form-grid .admin-wide { grid-column: auto; }
+  .admin-panel { padding: 18px 14px; }
+  .rag-panel, .rag-workspace { padding: 0; }
+  .rag-form { top: 8px; flex-direction: row; }
+  .rag-form button { padding: 13px; }
+  .rag-image-gallery { grid-template-columns: 1fr; }
+  .rag-user-row p { max-width: 88%; }
+  .rag-assistant-row { width: 100%; }
+  footer { width: calc(100% - 22px); }
+}

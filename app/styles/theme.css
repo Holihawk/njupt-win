@@ -1,0 +1,112 @@
+/* 主题只声明语义变量和背景，组件不得在此定义布局。 */
+:root,
+:root[data-theme="rain"] {
+  --page-base: #dfe2ed;
+  --page-background: #dfe2ed;
+  --aurora-background:
+    linear-gradient(180deg, rgba(238, 240, 247, .35), rgba(222, 225, 237, .68)),
+    url("/iamges/Bocchi-the-Rock!-anime-fandoms-8048076.jpeg") center / cover no-repeat;
+  --aurora-opacity: 1;
+  --ink: #172038;
+  --text-body: #30394d;
+  --muted: #586176;
+  --nav-ink: #3e465d;
+  --footer-ink: #4d566b;
+  --line: rgba(255, 255, 255, .42);
+  --line-strong: rgba(255, 255, 255, .62);
+  --glass: rgba(255, 255, 255, .18);
+  --glass-strong: rgba(255, 255, 255, .3);
+  --surface: rgba(255, 255, 255, .22);
+  --surface-strong: rgba(255, 255, 255, .48);
+  --surface-input: rgba(255, 255, 255, .5);
+  --surface-input-focus: rgba(255, 255, 255, .68);
+  --rag-surface: rgba(240, 242, 248, .92);
+  --shadow-card: 0 16px 42px rgba(55, 61, 90, .13), inset 0 1px rgba(255, 255, 255, .7);
+  --shadow-card-hover: 0 22px 54px rgba(55, 61, 90, .19), inset 0 1px rgba(255, 255, 255, .76);
+  --shadow-page: 0 22px 60px rgba(54, 58, 85, .15);
+  --backdrop-card: blur(16px) saturate(145%);
+  --backdrop-strong: blur(20px) saturate(150%);
+}
+
+:root[data-theme="rain"] body::before {
+  inset: 0;
+  animation: none;
+  transform: none;
+  will-change: auto;
+}
+
+:root[data-theme="light"] {
+  --page-base: #f1f3f8;
+  --page-background: linear-gradient(145deg, #fafbfe, #e9edf7);
+  --aurora-background:
+    radial-gradient(circle at 16% 18%, rgba(215, 91, 103, .13), transparent 31%),
+    radial-gradient(circle at 84% 24%, rgba(66, 104, 204, .16), transparent 34%),
+    radial-gradient(circle at 64% 86%, rgba(186, 132, 45, .11), transparent 30%);
+  --aurora-opacity: .9;
+  --ink: #172038;
+  --text-body: #30394d;
+  --muted: #60697d;
+  --nav-ink: #3d465c;
+  --footer-ink: #596176;
+  --line: rgba(86, 96, 126, .13);
+  --line-strong: rgba(86, 96, 126, .2);
+  --glass: rgba(255, 255, 255, .82);
+  --glass-strong: rgba(255, 255, 255, .96);
+  --surface: rgba(255, 255, 255, .75);
+  --surface-strong: rgba(255, 255, 255, .95);
+  --surface-input: rgba(255, 255, 255, .88);
+  --surface-input-focus: #fff;
+  --rag-surface: rgba(255, 255, 255, .96);
+  --shadow-card: 0 14px 38px rgba(55, 61, 90, .1);
+  --shadow-card-hover: 0 20px 48px rgba(55, 61, 90, .15);
+  --shadow-page: 0 20px 54px rgba(55, 61, 90, .11);
+  --backdrop-card: none;
+  --backdrop-strong: none;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --blue: #8ca8ff;
+  --red: #ff8995;
+  --yellow: #e7b65e;
+  --pink: #e38bb4;
+  --page-base: #0e1119;
+  --page-background: linear-gradient(145deg, #10131d, #181d2b);
+  --aurora-background:
+    radial-gradient(circle at 18% 16%, rgba(188, 102, 141, .18), transparent 32%),
+    radial-gradient(circle at 82% 24%, rgba(66, 104, 204, .23), transparent 36%),
+    radial-gradient(circle at 62% 84%, rgba(215, 91, 103, .1), transparent 30%);
+  --aurora-opacity: .8;
+  --ink: #edf0f8;
+  --text-body: #d2d7e4;
+  --muted: #a8b0c2;
+  --nav-ink: #d3d8e5;
+  --footer-ink: #a8b0c2;
+  --line: rgba(190, 201, 229, .13);
+  --line-strong: rgba(190, 201, 229, .22);
+  --glass: rgba(28, 34, 48, .9);
+  --glass-strong: rgba(36, 43, 60, .96);
+  --surface: rgba(33, 40, 56, .88);
+  --surface-strong: rgba(45, 53, 72, .96);
+  --surface-input: rgba(31, 38, 54, .96);
+  --surface-input-focus: rgba(39, 47, 66, 1);
+  --rag-surface: rgba(24, 29, 42, .97);
+  --shadow-card: 0 16px 42px rgba(0, 0, 0, .25);
+  --shadow-card-hover: 0 22px 54px rgba(0, 0, 0, .34);
+  --shadow-page: 0 22px 60px rgba(0, 0, 0, .28);
+  --backdrop-card: none;
+  --backdrop-strong: none;
+}
+
+@keyframes aurora-movement {
+  0%, 100% { transform: translate3d(-2%, -1%, 0) scale(1.02); }
+  50% { transform: translate3d(2%, 1.5%, 0) scale(1.07); }
+}
+
+@media (max-width: 800px) {
+  :root[data-theme="rain"] {
+    --aurora-background:
+      linear-gradient(180deg, rgba(241, 240, 248, .25), rgba(224, 225, 237, .62)),
+      url("/iamges/Bocchi-the-Rock!-anime-fandoms-mov.png") center top / cover no-repeat;
+  }
+}

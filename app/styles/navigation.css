@@ -1,0 +1,122 @@
+/* 全站顶部导航、品牌标识与主题切换菜单。 */
+.site-header,
+main,
+footer {
+  width: min(1120px, calc(100% - 32px));
+  margin-inline: auto;
+}
+
+.site-header {
+  height: 66px;
+  margin-top: 12px;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  background: transparent;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 20px;
+  font-weight: 800;
+  text-decoration: none;
+  animation: page-enter 300ms ease-out backwards;
+}
+
+.brand span {
+  background: linear-gradient(90deg, var(--red), var(--yellow), var(--blue), var(--pink));
+  background-clip: text;
+  color: transparent;
+}
+
+.brand img {
+  width: 42px;
+  height: 42px;
+  padding: 4px;
+  border-radius: 14px;
+  background: var(--surface-strong);
+  box-shadow: 0 6px 18px rgba(28, 39, 69, .14);
+}
+
+nav { display: flex; gap: 10px; }
+nav a,
+.theme-switcher summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  color: var(--nav-ink);
+  text-decoration: none;
+  transition: background .2s ease, transform .2s ease;
+}
+nav a:hover,
+.theme-switcher summary:hover { background: var(--surface); transform: translateY(-1px); }
+nav a[aria-current="page"],
+.theme-switcher[open] summary { color: var(--blue); }
+.nav-icon,
+.theme-trigger-icon {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+}
+.nav-icon svg,
+.theme-trigger-icon svg { width: 100%; height: 100%; }
+.theme-switcher { position: relative; }
+.theme-switcher summary {
+  list-style: none;
+  cursor: pointer;
+}
+.theme-switcher summary::-webkit-details-marker { display: none; }
+.theme-trigger-icon { display: none; }
+:root[data-theme-choice="rain"] .theme-trigger-rain,
+:root[data-theme-choice="light"] .theme-trigger-light,
+:root[data-theme-choice="dark"] .theme-trigger-dark,
+:root[data-theme-choice="system"][data-theme="light"] .theme-trigger-system-light,
+:root[data-theme-choice="system"][data-theme="dark"] .theme-trigger-system-dark {
+  display: block;
+}
+.theme-menu {
+  position: absolute;
+  z-index: 50;
+  top: calc(100% + 8px);
+  right: 0;
+  display: grid;
+  min-width: 150px;
+  gap: 4px;
+  padding: 7px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--rag-surface);
+  box-shadow: var(--shadow-card);
+}
+.theme-menu button {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.theme-menu button:hover,
+.theme-menu button[aria-pressed="true"] {
+  background: var(--surface);
+  color: var(--blue);
+}
+.theme-menu button:focus-visible,
+.theme-switcher summary:focus-visible,
+nav a:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+.theme-menu svg { width: 18px; height: 18px; }

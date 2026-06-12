@@ -1,0 +1,18 @@
+/* 全站页脚与备案信息。 */
+footer {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 22px;
+  border: 0;
+  background: transparent;
+  color: var(--footer-ink);
+  font-size: 13px;
+  text-align: center;
+}
+footer a {
+  color: var(--pink);
+  font-weight: 700;
+  text-decoration: none;
+}
+footer a:hover { text-decoration: underline; }

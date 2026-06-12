@@ -1,0 +1,199 @@
+/* 校历进度、个人节点与校历交互控件。 */
+.calendar-card {
+  position: relative;
+  height: 100%;
+  overflow: visible;
+  padding: 22px;
+  border-radius: 24px;
+  animation: card-enter 420ms 400ms ease-out backwards;
+}
+.calendar-card::before {
+  position: absolute;
+  inset: -50% auto auto -40%;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(255, 223, 128, .22);
+  filter: blur(28px);
+  content: "";
+  pointer-events: none;
+}
+.calendar-card > * { position: relative; }
+.calendar-card h2 { margin-bottom: 6px; font-size: 27px; }
+.calendar-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.calendar-heading .eyebrow { margin-bottom: 0; }
+.reminder-settings {
+  width: 34px;
+  height: 34px;
+  padding: 5px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--surface);
+  color: var(--blue);
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+.reminder-settings:hover,
+.reminder-settings[aria-expanded="true"] {
+  background: var(--surface-strong);
+  transform: rotate(8deg);
+}
+.reminder-settings svg { width: 100%; height: 100%; }
+
+.progress {
+  position: relative;
+  height: 12px;
+  margin: 18px 0 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .55);
+  border-radius: 999px;
+  background: rgba(79, 87, 109, .13);
+  box-shadow: inset 0 2px 5px rgba(38, 43, 61, .1);
+}
+.progress-fill {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    #43ad66 0%,
+    #62bb6e 27%,
+    #b9bd58 33%,
+    #e1bd4c 39%,
+    #e2b94b 60%,
+    #dc8754 67%,
+    #d95d68 73%,
+    #cf5363 100%
+  );
+  box-shadow: 0 0 15px rgba(226, 177, 78, .42);
+  clip-path: inset(0 calc(100% - var(--progress)) 0 0 round 999px);
+  animation: progress-grow 900ms 820ms cubic-bezier(.16, 1, .3, 1) both;
+}
+.progress-fill::after {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(105deg, transparent 15%, rgba(255, 255, 255, .74) 42%, transparent 67%),
+    linear-gradient(180deg, rgba(255, 255, 255, .3), transparent 55%);
+  content: "";
+  transform: translateX(-120%);
+  animation: progress-shine 3.2s ease-in-out infinite;
+}
+.progress-label { display: flex; justify-content: space-between; gap: 14px; margin-bottom: 14px; color: var(--muted); font-size: 12px; }
+.progress-label strong { color: var(--ink); font-size: 17px; }
+
+.event-list {
+  display: grid;
+  gap: 7px;
+  margin: 0 0 14px;
+}
+.reminder-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 6px;
+  margin: 0 0 10px;
+}
+.reminder-editor {
+  margin: 0 0 12px;
+  padding: 10px;
+  border: 1px solid rgba(66, 104, 204, .24);
+  border-radius: 13px;
+  background: var(--surface);
+  box-shadow: 0 10px 24px rgba(55, 61, 90, .1);
+}
+.reminder-editor-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.reminder-editor-heading strong { font-size: 12px; }
+.reminder-editor-heading button {
+  padding: 4px 7px;
+  border: 0;
+  border-radius: 8px;
+  background: rgba(188, 102, 141, .12);
+  color: var(--pink);
+  font: inherit;
+  font-size: 10px;
+  cursor: pointer;
+}
+.reminder-editor > p {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 9px;
+}
+.reminder-form input,
+.reminder-form button {
+  min-width: 0;
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 11px;
+}
+.reminder-form button {
+  background: rgba(66, 104, 204, .16);
+  color: var(--blue);
+  font-weight: 700;
+  cursor: pointer;
+}
+.event-countdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  text-decoration: none;
+  transition: background .2s ease, transform .2s ease;
+}
+.event-countdown:hover { transform: translateX(2px); background: var(--surface-strong); }
+.event-countdown span { display: grid; gap: 3px; }
+.event-countdown strong { font-size: 14px; }
+.event-countdown small { color: var(--muted); font-size: 11px; }
+.event-countdown b { color: var(--red); font-size: 18px; white-space: nowrap; }
+.personal-reminder { border-color: rgba(188, 102, 141, .32); }
+.personal-reminder > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.personal-reminder button {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(215, 91, 103, .12);
+  color: var(--red);
+  cursor: pointer;
+}
+.icon-swap {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+}
+.icon-swap > span {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+}
+.icon-swap svg { width: 100%; height: 100%; }
+.icon-fill { opacity: 0; }
+button:hover .icon-line { opacity: 0; }
+button:hover .icon-fill { opacity: 1; }

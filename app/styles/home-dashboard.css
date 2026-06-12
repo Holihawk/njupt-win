@@ -1,0 +1,136 @@
+/* 首页摘要、最近通知与顶部信息面板。 */
+.top-dashboard {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, .65fr);
+  gap: 18px;
+  align-items: stretch;
+  margin-bottom: 26px;
+}
+
+.top-dashboard-calendar-only {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.top-dashboard-calendar-only .calendar-card {
+  width: min(380px, 100%);
+}
+
+.summary-panel {
+  padding: 20px 24px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--glass);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: var(--backdrop-card);
+  animation: card-enter 420ms 300ms ease-out backwards;
+  transition: transform .22s ease, background .22s ease, box-shadow .22s ease, backdrop-filter .22s ease;
+}
+
+.summary-panel h1 {
+  margin: 3px 0 0;
+  font-size: clamp(26px, 3vw, 36px);
+  letter-spacing: -.03em;
+}
+
+.summary-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.summary-heading .eyebrow { margin-bottom: 0; }
+.summary-heading span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.summary-list {
+  margin: 0;
+  padding-left: 28px;
+}
+
+.summary-list li {
+  padding: 6px 0;
+  font-weight: 700;
+}
+
+.summary-list li + li {
+  border-top: 1px solid rgba(255, 255, 255, .34);
+}
+
+.summary-list a {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 9px;
+  text-decoration: none;
+}
+
+.summary-list strong {
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, currentColor 13%, transparent);
+  font-size: 12px;
+}
+
+.summary-list span {
+  overflow: hidden;
+  color: var(--text-body);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.55;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.summary-list small { color: currentColor; }
+.summary-tag-red, .summary-tag-red strong { color: var(--red); }
+.summary-tag-yellow, .summary-tag-yellow strong { color: var(--yellow); }
+.summary-tag-blue, .summary-tag-blue strong { color: var(--blue); }
+.summary-tag-pink, .summary-tag-pink strong { color: var(--pink); }
+.summary-tag-purple, .summary-tag-purple strong { color: #8056ad; }
+.summary-tag-green, .summary-tag-green strong { color: #348760; }
+.summary-tag-orange, .summary-tag-orange strong { color: #b56c35; }
+.summary-tag-gray, .summary-tag-gray strong { color: #687083; }
+
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 18px;
+  padding: 0 8px;
+}
+.section-heading h2 { margin-bottom: 0; font-size: 28px; }
+.section-heading span { color: var(--muted); font-size: 13px; }
+
+.notice-list { display: grid; gap: 12px; }
+.notice-section { width: min(820px, 100%); }
+.notice-card,
+.calendar-card,
+.empty {
+  border: 1px solid var(--line);
+  background: var(--glass);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: var(--backdrop-card);
+}
+
+.notice-card {
+  padding: 20px;
+  border-radius: 18px;
+  content-visibility: auto;
+  contain-intrinsic-size: 150px;
+  transition: transform .22s ease, background .22s ease, box-shadow .22s ease, backdrop-filter .22s ease;
+}
+.notice-card h3 { margin: 12px 0 16px; font-size: 17px; line-height: 1.55; }
+.notice-card > a,
+.calendar-card > a {
+  color: var(--blue);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.notice-meta { display: flex; justify-content: space-between; gap: 16px; color: var(--muted); font-size: 12px; }
