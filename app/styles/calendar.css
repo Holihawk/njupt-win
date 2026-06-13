@@ -100,8 +100,28 @@
   gap: 6px;
   margin: 0 0 10px;
 }
+.reminder-editor-reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  margin-bottom: 0;
+  opacity: 0;
+  transform: translateY(-7px);
+  transition:
+    grid-template-rows .36s cubic-bezier(.2, .8, .2, 1),
+    margin-bottom .36s cubic-bezier(.2, .8, .2, 1),
+    opacity .22s ease,
+    transform .36s cubic-bezier(.2, .8, .2, 1);
+}
+.reminder-editor-reveal[data-open="true"] {
+  grid-template-rows: 1fr;
+  margin-bottom: 12px;
+  opacity: 1;
+  transform: translateY(0);
+}
 .reminder-editor {
-  margin: 0 0 12px;
+  min-height: 0;
+  overflow: hidden;
+  margin: 0;
   padding: 10px;
   border: 1px solid rgba(66, 104, 204, .24);
   border-radius: 13px;

@@ -7,6 +7,7 @@
     linear-gradient(180deg, rgba(238, 240, 247, .35), rgba(222, 225, 237, .68)),
     url("/images/Bocchi-the-Rock!-anime-fandoms-8048076.jpeg") center / cover no-repeat;
   --aurora-opacity: 1;
+  --focus-overlay: rgba(20, 24, 38, .22);
   --ink: #172038;
   --text-body: #30394d;
   --muted: #586176;
@@ -43,6 +44,7 @@
     radial-gradient(circle at 84% 24%, rgba(66, 104, 204, .16), transparent 34%),
     radial-gradient(circle at 64% 86%, rgba(186, 132, 45, .11), transparent 30%);
   --aurora-opacity: .9;
+  --focus-overlay: rgba(240, 243, 250, .68);
   --ink: #172038;
   --text-body: #30394d;
   --muted: #60697d;
@@ -77,6 +79,7 @@
     radial-gradient(circle at 82% 24%, rgba(66, 104, 204, .23), transparent 36%),
     radial-gradient(circle at 62% 84%, rgba(215, 91, 103, .1), transparent 30%);
   --aurora-opacity: .8;
+  --focus-overlay: rgba(6, 8, 14, .5);
   --ink: #edf0f8;
   --text-body: #d2d7e4;
   --muted: #a8b0c2;

@@ -67,6 +67,7 @@ export function CalendarCard({ status }: { status: CalendarStatus | null }) {
       <div className="calendar-heading">
         <p className="eyebrow">{status.mode === "term" ? "校历进度" : "开学进度"}</p>
         <button
+          aria-controls="calendar-reminder-editor"
           aria-expanded={editing}
           aria-label="管理节点"
           className="reminder-settings"
@@ -95,7 +96,13 @@ export function CalendarCard({ status }: { status: CalendarStatus | null }) {
           {status.mode === "term" ? "距离本学期结束" : "距离开学"} {status.daysRemaining} 天
         </span>
       </div>
-      {editing && (
+      <div
+        aria-hidden={!editing}
+        className="reminder-editor-reveal"
+        data-open={editing}
+        id="calendar-reminder-editor"
+        inert={!editing}
+      >
         <div className="reminder-editor">
           <div className="reminder-editor-heading">
             <strong>管理节点</strong>
@@ -108,7 +115,7 @@ export function CalendarCard({ status }: { status: CalendarStatus | null }) {
           </form>
           <p>下方所有节点均可删除，修改会保存在当前浏览器</p>
         </div>
-      )}
+      </div>
       <div className="event-list">
         {reminders.map((reminder) => (
           <div className="event-countdown personal-reminder" key={reminder.id}>

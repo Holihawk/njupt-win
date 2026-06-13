@@ -37,9 +37,13 @@ button:not(:disabled):active,
       0 0 20px rgba(215, 91, 103, .18);
   }
 }
-@keyframes rag-winning {
-  0% { box-shadow: 0 0 0 0 rgba(66,104,204,.42); opacity: 1; }
-  100% { box-shadow: 0 0 0 8px rgba(66,104,204,0); opacity: .45; }
+@keyframes rag-thinking-dot {
+  0%, 60%, 100% { opacity: .25; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+@keyframes rag-caret {
+  0%, 48% { opacity: 1; }
+  49%, 100% { opacity: 0; }
 }
 
 @media (hover: hover) and (pointer: fine) {

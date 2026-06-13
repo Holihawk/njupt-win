@@ -45,7 +45,7 @@ body {
 
 body::before {
   position: fixed;
-  z-index: -1;
+  z-index: -2;
   inset: -12%;
   background: var(--aurora-background);
   content: "";
@@ -55,6 +55,20 @@ body::before {
   animation: aurora-movement 38s ease-in-out infinite;
   will-change: transform;
 }
+
+body::after {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  background: var(--focus-overlay);
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .42s ease;
+}
+
+html.rag-route-leaving body::after,
+body:has(.ask-page)::after { opacity: 1; }
 
 a { color: inherit; }
 button, input, select, textarea { font: inherit; }
@@ -74,4 +88,5 @@ svg { display: block; }
 
 @media (prefers-reduced-motion: reduce) {
   body::before { animation: none; transform: none; }
+  body::after { transition: none; }
 }

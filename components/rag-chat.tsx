@@ -32,6 +32,7 @@ export function RagChat({ enabled, initialQuestion = "" }: { enabled: boolean; i
   const [messages, setMessages] = useState<RagMessage[]>([]);
   const [turns, setTurns] = useState<AnswerTurn[]>([]);
   const [pending, setPending] = useState(false);
+  const [navigating, setNavigating] = useState(false);
   const [error, setError] = useState("");
   const abortRef = useRef<AbortController | null>(null);
   const startedRef = useRef(false);
@@ -48,7 +49,8 @@ export function RagChat({ enabled, initialQuestion = "" }: { enabled: boolean; i
     const question = input.trim();
     if (!question || pending || !enabled) return;
     if (!standalone) {
-      router.push(`/ask?q=${encodeURIComponent(question)}`);
+      setNavigating(true);
+      await animateToAskPage(event.currentTarget, () => router.push(`/ask?q=${encodeURIComponent(question)}`));
       return;
     }
     setInput("");
@@ -121,25 +123,6 @@ export function RagChat({ enabled, initialQuestion = "" }: { enabled: boolean; i
 
   return (
     <section className={`rag-panel${standalone ? " rag-workspace" : " rag-entry"}`}>
-      <form className="search-form rag-form" onSubmit={submit}>
-        <label className="sr-only" htmlFor="rag-question">向校园资料库提问</label>
-        <input
-          disabled={!enabled}
-          id="rag-question"
-          onChange={(event) => setInput(event.target.value)}
-          placeholder={standalone ? "继续追问…" : "询问任何校园信息"}
-          value={input}
-        />
-        {pending ? (
-          <button aria-label="停止生成" className="rag-icon-button rag-stop-button" onClick={stop} type="button">
-            <IconSwap fill={<RiStopCircleFill />} line={<RiStopCircleLine />} />
-          </button>
-        ) : (
-          <button aria-label={standalone ? "追问" : "提问"} className="rag-icon-button" disabled={!enabled} type="submit">
-            <IconSwap fill={<RiSendPlaneFill />} line={<RiSendPlaneLine />} />
-          </button>
-        )}
-      </form>
       {!enabled && <p className="form-error">LLM API 尚未配置，暂时无法生成回答</p>}
       {error && <p className="form-error">{error}</p>}
 
@@ -153,21 +136,81 @@ export function RagChat({ enabled, initialQuestion = "" }: { enabled: boolean; i
               <div className="rag-assistant-row">
                 <div className={`rag-status rag-status-${turn.status}`}>
                   <span>{turn.status}</span>
-                  {turn.status === "winning" && <i aria-hidden="true" />}
+                  {turn.status === "winning" && (
+                    <span aria-hidden="true" className="rag-thinking-dots">
+                      <i /><i /><i />
+                    </span>
+                  )}
                 </div>
-                <div className="rag-answer">{turn.answer || (turn.status === "winning" ? "正在检索并组织回答…" : "未生成回答。")}</div>
+                <StreamingAnswer answer={turn.answer} status={turn.status} />
                 <RagEvidence sources={turn.sources} />
-                {turn.sources.length > 0 && (
-                  <details>
-                    <summary>查看来源</summary>
-                    <SearchResults results={turn.sources} />
-                  </details>
-                )}
+                {turn.sources.length > 0 && <SourcesAccordion sources={turn.sources} />}
               </div>
             </article>
           ))}
         </div>
       )}
+
+      <form className="search-form rag-form" onSubmit={submit}>
+        <label className="sr-only" htmlFor="rag-question">向校园资料库提问</label>
+        <input
+          disabled={!enabled || navigating}
+          id="rag-question"
+          onChange={(event) => setInput(event.target.value)}
+          placeholder={standalone ? "继续追问…" : "询问任何校园信息"}
+          value={input}
+        />
+        {pending ? (
+          <button aria-label="停止生成" className="rag-icon-button rag-stop-button" onClick={stop} type="button">
+            <IconSwap fill={<RiStopCircleFill />} line={<RiStopCircleLine />} />
+          </button>
+        ) : (
+          <button
+            aria-label={standalone ? "追问" : "提问"}
+            className="rag-icon-button"
+            disabled={!enabled || navigating}
+            type="submit"
+          >
+            <IconSwap fill={<RiSendPlaneFill />} line={<RiSendPlaneLine />} />
+          </button>
+        )}
+      </form>
+    </section>
+  );
+}
+
+/** 将模型返回的流式片段缓冲为稳定的逐字显示，避免较大数据块突然跳入页面。 */
+function StreamingAnswer({ answer, status }: { answer: string; status: TurnStatus }) {
+  const [displayed, setDisplayed] = useState("");
+
+  useEffect(() => {
+    if (displayed.length >= answer.length) return;
+    const remaining = answer.length - displayed.length;
+    const step = Math.max(1, Math.ceil(remaining / 14));
+    const timer = window.setTimeout(() => {
+      setDisplayed(answer.slice(0, Math.min(answer.length, displayed.length + step)));
+    }, 22);
+    return () => window.clearTimeout(timer);
+  }, [answer, displayed]);
+
+  const streaming = status === "winning" || displayed.length < answer.length;
+  const content = displayed || (status === "winning" ? "正在检索并组织回答…" : "未生成回答。");
+  return <div className={`rag-answer${streaming ? " rag-answer-streaming" : ""}`}>{content}</div>;
+}
+
+/** 来源始终保留在 DOM 中，通过网格行高实现可逆的平滑展开。 */
+function SourcesAccordion({ sources }: { sources: HybridSearchResult[] }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <section className="rag-sources">
+      <button aria-expanded={open} onClick={() => setOpen((value) => !value)} type="button">
+        查看来源
+      </button>
+      <div aria-hidden={!open} className="rag-sources-reveal" data-open={open} inert={!open}>
+        <div>
+          <SearchResults results={sources} />
+        </div>
+      </div>
     </section>
   );
 }
@@ -179,6 +222,57 @@ function IconSwap({ fill, line }: { fill: React.ReactNode; line: React.ReactNode
       <span className="icon-fill">{fill}</span>
     </span>
   );
+}
+
+/** 首页提交时使用克隆节点执行 FLIP，衔接到问答页底部的同形输入框。 */
+async function animateToAskPage(form: HTMLFormElement, navigate: () => void) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    navigate();
+    return;
+  }
+
+  const rect = form.getBoundingClientRect();
+  const targetWidth = Math.min(760, window.innerWidth - 22);
+  const targetLeft = (window.innerWidth - targetWidth) / 2;
+  const targetTop = window.innerHeight - rect.height - 14;
+  const clone = form.cloneNode(true) as HTMLFormElement;
+  clone.removeAttribute("id");
+  clone.querySelectorAll("[id]").forEach((element) => element.removeAttribute("id"));
+  clone.setAttribute("aria-hidden", "true");
+  clone.inert = true;
+  clone.classList.add("rag-form-transition-clone");
+  Object.assign(clone.style, {
+    left: `${rect.left}px`,
+    top: `${rect.top}px`,
+    width: `${rect.width}px`,
+    height: `${rect.height}px`,
+  });
+  document.body.append(clone);
+  form.classList.add("rag-form-leaving");
+  document.documentElement.classList.add("rag-route-leaving");
+
+  const scaleX = targetWidth / rect.width;
+  try {
+    await clone.animate(
+      [
+        { transform: "translate3d(0, 0, 0) scaleX(1)", borderRadius: "18px" },
+        {
+          transform: `translate3d(${targetLeft - rect.left}px, ${targetTop - rect.top}px, 0) scaleX(${scaleX})`,
+          borderRadius: "15px",
+        },
+      ],
+      { duration: 440, easing: "cubic-bezier(.2, .8, .2, 1)", fill: "forwards" },
+    ).finished;
+  } catch {
+    // 浏览器取消动画时仍继续进入问答页，避免导航被视觉增强阻断。
+  }
+
+  navigate();
+  window.setTimeout(() => {
+    clone.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 180, fill: "forwards" }).finished
+      .finally(() => clone.remove());
+    document.documentElement.classList.remove("rag-route-leaving");
+  }, 280);
 }
 
 /** 服务端按当前问题筛选证据，并简洁展示 */

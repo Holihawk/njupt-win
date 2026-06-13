@@ -10,13 +10,16 @@
 }
 .ask-page { max-width: 980px; padding-top: 24px; }
 .rag-workspace {
+  display: flex;
+  flex-direction: column;
   min-height: calc(100vh - 190px);
   margin-bottom: 0;
 }
 .rag-conversation {
   display: grid;
+  flex: 1;
   gap: 36px;
-  padding: 30px 4px 28px;
+  padding: 12px 4px 30px;
 }
 .rag-exchange { display: grid; gap: 22px; }
 .rag-user-row {
@@ -48,14 +51,20 @@
   font-weight: 800;
   letter-spacing: .06em;
 }
-.rag-status i {
+.rag-thinking-dots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.rag-thinking-dots i {
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: currentColor;
-  box-shadow: 0 0 0 0 rgba(66,104,204,.4);
-  animation: rag-winning 1.2s ease-out infinite;
+  animation: rag-thinking-dot 1.15s ease-in-out infinite;
 }
+.rag-thinking-dots i:nth-child(2) { animation-delay: .16s; }
+.rag-thinking-dots i:nth-child(3) { animation-delay: .32s; }
 .rag-status-winned { color: #348760; }
 .rag-status-stopped { color: var(--yellow); }
 .rag-answer {
@@ -63,10 +72,59 @@
   line-height: 1.8;
   white-space: pre-wrap;
 }
-.rag-assistant-row details { margin-top: 14px; }
-.rag-assistant-row summary { color: var(--muted); font-size: 12px; cursor: pointer; }
 .rag-assistant-row .smart-results { margin-top: 12px; }
 .rag-assistant-row .smart-result-card { box-shadow: none; }
+.rag-answer-streaming::after {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 4px;
+  border-radius: 999px;
+  background: var(--blue);
+  content: "";
+  vertical-align: -.12em;
+  animation: rag-caret 1s steps(1) infinite;
+}
+.rag-sources { margin-top: 14px; }
+.rag-sources > button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+.rag-sources > button::after {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 5px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  content: "";
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform .28s ease;
+}
+.rag-sources > button[aria-expanded="true"]::after { transform: translateY(1px) rotate(225deg); }
+.rag-sources-reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition:
+    grid-template-rows .36s cubic-bezier(.2, .8, .2, 1),
+    opacity .22s ease,
+    transform .36s cubic-bezier(.2, .8, .2, 1);
+}
+.rag-sources-reveal[data-open="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transform: translateY(0);
+}
+.rag-sources-reveal > div {
+  min-height: 0;
+  overflow: hidden;
+}
 .rag-form {
   position: sticky;
   z-index: 20;
@@ -78,6 +136,20 @@
   background: var(--rag-surface);
   box-shadow: 0 12px 32px rgba(55,61,90,.14);
   backdrop-filter: var(--backdrop-card);
+}
+.rag-workspace .rag-form {
+  bottom: 12px;
+  top: auto;
+  width: min(760px, 100%);
+  margin: auto auto 0;
+}
+.rag-form-leaving { opacity: 0; }
+.rag-form-transition-clone {
+  position: fixed;
+  z-index: 100;
+  margin: 0;
+  pointer-events: none;
+  transform-origin: top left;
 }
 .rag-form input {
   border: 0;
