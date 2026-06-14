@@ -1,4 +1,4 @@
-import { closeNoticeRefreshPool, refreshNotices } from "../src/notice-refresh.js";
+import { closeNoticeRefreshPool, refreshNotices } from "../src/summary/notice-refresh.js";
 
 const rawLimit = process.argv.find((value) => value.startsWith("--limit="));
 const limit = rawLimit ? Number(rawLimit.split("=")[1]) : 100;

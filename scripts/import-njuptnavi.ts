@@ -1,8 +1,8 @@
 import { createHash } from "node:crypto";
 import * as cheerio from "cheerio";
 import type { PoolClient } from "pg";
-import { importUrlDraft, type EditableBlock, type ImportedDraft } from "../src/admin-import.js";
-import { getPool, transaction } from "../src/db.js";
+import { importUrlDraft, type EditableBlock, type ImportedDraft } from "../src/admin/import.js";
+import { getPool, transaction } from "../src/database/db.js";
 
 const sourceId = "njupt-navi";
 const sourceName = "NJUPT-NAVI 生存指南";

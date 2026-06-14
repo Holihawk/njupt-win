@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 import type { Document } from "../src/types.js";
-import { recentNotices, searchNotices } from "../src/notices.js";
+import { recentNotices, searchNotices } from "../src/content/notices.js";
 import {
   classifyNotice,
   hasLlmConfig,
   localSummary,
   selectRecentSummaries,
-} from "../src/summaries.js";
+} from "../src/summary/summaries.js";
 
 const documents = Array.from({ length: 10 }, (_, index) => ({
   title: `${index % 2 ? "考试" : "活动"}通知 ${index}`,

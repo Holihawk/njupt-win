@@ -1,6 +1,6 @@
 import { SearchForm } from "../../components/search-form";
 import { SearchResults } from "../../components/search-results";
-import { hybridSearch } from "../../src/hybrid-search";
+import { hybridSearch } from "../../src/search/hybrid-search";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +11,7 @@ export default async function SearchPage({
   searchParams: Promise<{ q?: string | string[] }>;
 }) {
   const params = await searchParams;
-  const query = typeof params.q === "string" ? params.q.trim() : "";
+  const query = typeof params.q === "string" ? params.q.trim().slice(0, 300) : "";
   const results = query ? await hybridSearch(query, 8) : [];
 
   return (

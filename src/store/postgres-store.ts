@@ -1,5 +1,5 @@
 import type { PoolClient } from "pg";
-import { transaction } from "../db.js";
+import { transaction } from "../database/db.js";
 import type { Document } from "../types.js";
 
 /**

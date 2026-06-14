@@ -1,13 +1,13 @@
 {
   "name": "njupt-win",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "南京邮电大学公开信息检索与 RAG 问答平台",
   "private": true,
   "scripts": {
     "dev": "next dev -H 0.0.0.0",
     "build": "next build",
     "start": "next start -H 0.0.0.0",
-    "crawl": "node --env-file=.env --import tsx src/cli.ts",
+    "crawl": "node --env-file=.env --import tsx src/crawler/cli.ts",
     "summarize": "node --env-file=.env --import tsx scripts/summarize-notices.ts",
     "refresh:notices": "node --env-file=.env --import tsx scripts/refresh-notices.ts",
     "refresh:install-timer": "bash scripts/install-refresh-timer.sh",

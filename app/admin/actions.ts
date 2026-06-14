@@ -4,9 +4,9 @@ import { createHash } from "node:crypto";
 import type { PoolClient } from "pg";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { clearAdminSession, requireAdmin } from "../../src/admin-auth";
-import { query, transaction } from "../../src/db";
-import type { EditableBlock, EditableBlockType } from "../../src/admin-import";
+import { clearAdminSession, requireAdmin } from "../../src/admin/auth";
+import { query, transaction } from "../../src/database/db";
+import type { EditableBlock, EditableBlockType } from "../../src/admin/import";
 
 /** 清除后台 cookie 后回到登录页。 */
 export async function logout() {

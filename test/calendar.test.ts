@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
-import type { AcademicTerm, CalendarEvent } from "../src/calendar.js";
-import { getCalendarStatus } from "../src/calendar.js";
+import type { AcademicTerm, CalendarEvent } from "../src/content/calendar.js";
+import { getCalendarStatus } from "../src/content/calendar.js";
 import {
   daysUntilReminder,
   initializePersonalReminders,
   parsePersonalReminders,
-} from "../src/personal-reminders.js";
+} from "../src/content/personal-reminders.js";
 
 const terms: AcademicTerm[] = [{
   name: "测试学期",

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { EditableBlock, EditableBlockType } from "../src/admin-import";
+import type { EditableBlock, EditableBlockType } from "../src/admin/import";
 
 type UiBlock = Omit<EditableBlock, "metadata"> & {
   id: string;

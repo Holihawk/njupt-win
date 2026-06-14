@@ -1,5 +1,5 @@
-import { embedPendingChunks } from "../src/embeddings.js";
-import { getPool } from "../src/db.js";
+import { embedPendingChunks } from "../src/ai/embeddings.js";
+import { getPool } from "../src/database/db.js";
 
 const rawLimit = process.argv.find((value) => value.startsWith("--limit="));
 const rawBatch = process.argv.find((value) => value.startsWith("--batch="));

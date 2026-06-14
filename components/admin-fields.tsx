@@ -1,5 +1,5 @@
-import type { AdminDocument, AdminSource } from "../src/admin-data";
-import type { EditableBlock, ImportedDraft } from "../src/admin-import";
+import type { AdminDocument, AdminSource } from "../src/admin/data";
+import type { EditableBlock, ImportedDraft } from "../src/admin/import";
 import { BlockEditor } from "./block-editor";
 
 export function SourceFields({ source }: { source?: AdminSource }) {

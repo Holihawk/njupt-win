@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { isAdmin } from "../../../src/admin-auth";
+import { isAdmin } from "../../../src/admin/auth";
 import { login } from "./actions";
 
 export default async function AdminLoginPage({

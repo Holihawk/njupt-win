@@ -1,5 +1,5 @@
 import { RagChat } from "../../components/rag-chat";
-import { hasRagConfig } from "../../src/rag";
+import { hasRagConfig } from "../../src/rag/index";
 
 export const dynamic = "force-dynamic";
 
@@ -12,9 +12,7 @@ export default async function AskPage({
   const question = typeof rawQuestion === "string" ? rawQuestion.trim().slice(0, 3000) : "";
   return (
     <main className="ask-page">
-      {question
-        ? <RagChat enabled={hasRagConfig()} initialQuestion={question} />
-        : <RagChat enabled={hasRagConfig()} />}
+      <RagChat enabled={hasRagConfig()} initialQuestion={question} workspace />
     </main>
   );
 }

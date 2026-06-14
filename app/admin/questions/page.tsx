@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { requireAdmin } from "../../../src/admin-auth";
-import { countAdminQuestionHistory, listAdminQuestionHistory } from "../../../src/admin-data";
+import { requireAdmin } from "../../../src/admin/auth";
+import { countAdminQuestionHistory, listAdminQuestionHistory } from "../../../src/admin/data";
+import { safePublicUrl } from "../../../src/security/safe-url";
 
 export const dynamic = "force-dynamic";
 
@@ -47,6 +48,8 @@ export default async function AdminQuestionsPage({
                   </span>
                   <time dateTime={history.createdAt}>{formatDate(history.createdAt)}</time>
                   <span>{history.sourceCount} 个来源</span>
+                  <span>{history.routeMode ? modeLabel(history.routeMode) : "模式待定"}</span>
+                  {history.feedback && <span>{history.feedback === "helpful" ? "有帮助" : "无帮助"}</span>}
                 </div>
                 <h3>{history.question}</h3>
                 <details>
@@ -57,9 +60,11 @@ export default async function AdminQuestionsPage({
                   {history.sources.length > 0 && (
                     <div className="question-history-sources">
                       {history.sources.map((source, index) => (
-                        <a href={source.url} key={`${source.url}-${index}`} rel="noreferrer" target="_blank">
-                          {source.title}<small>{source.sourceName}</small>
-                        </a>
+                        safePublicUrl(source.url) && (
+                          <a href={safePublicUrl(source.url)!} key={`${source.url}-${index}`} rel="noreferrer" target="_blank">
+                            {source.title}<small>{source.sourceName}</small>
+                          </a>
+                        )
                       ))}
                     </div>
                   )}
@@ -76,6 +81,15 @@ export default async function AdminQuestionsPage({
       </section>
     </main>
   );
+}
+
+function modeLabel(mode: NonNullable<Awaited<ReturnType<typeof listAdminQuestionHistory>>[number]["routeMode"]>): string {
+  return {
+    campus_rag: "校园资料",
+    general_chat: "通用问答",
+    mixed: "混合问答",
+    unsafe: "安全响应",
+  }[mode];
 }
 
 function statusLabel(status: "pending" | "completed" | "stopped" | "failed"): string {

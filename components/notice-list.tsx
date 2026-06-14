@@ -1,4 +1,5 @@
-import type { Notice } from "../src/notices";
+import type { Notice } from "../src/content/notices";
+import { safePublicUrl } from "../src/security/safe-url";
 
 /** 统一渲染通知结果列表，所有条目保留官方原文跳转 */
 export function NoticeList({ notices }: { notices: Notice[] }) {
@@ -15,9 +16,9 @@ export function NoticeList({ notices }: { notices: Notice[] }) {
             <time dateTime={notice.publishedAt ?? undefined}>{notice.publishedAt}</time>
           </div>
           <h3>{notice.title}</h3>
-          <a href={notice.url} rel="noreferrer" target="_blank">
+          {safePublicUrl(notice.url) && <a href={safePublicUrl(notice.url)!} rel="noreferrer" target="_blank">
             查看原文 <span aria-hidden="true">↗</span>
-          </a>
+          </a>}
         </article>
       ))}
     </div>

@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DocumentFields } from "../../../../components/admin-fields";
-import { requireAdmin } from "../../../../src/admin-auth";
-import { getAdminDocument, listAdminSources } from "../../../../src/admin-data";
+import { requireAdmin } from "../../../../src/admin/auth";
+import { getAdminDocument, listAdminSources } from "../../../../src/admin/data";
 import { updateDocument } from "../../actions";
 
 export default async function EditDocumentPage({ params }: { params: Promise<{ id: string }> }) {

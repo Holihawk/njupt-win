@@ -1,4 +1,5 @@
-import { getNoticeCategoryMeta, type NoticeSummary } from "../src/summaries";
+import { getNoticeCategoryMeta, type NoticeSummary } from "../src/summary/summaries";
+import { safePublicUrl } from "../src/security/safe-url";
 
 /** 展示首页最新四条摘要 */
 export function SummaryDigest({ summaries }: { summaries: NoticeSummary[] }) {
@@ -16,9 +17,11 @@ export function SummaryDigest({ summaries }: { summaries: NoticeSummary[] }) {
       <ol className="summary-list">
         {summaries.map((summary) => {
           const tag = getNoticeCategoryMeta(summary.category);
+          const url = safePublicUrl(summary.documentUrl);
+          if (!url) return null;
           return (
           <li className={`summary-tag-${tag.tone}`} key={summary.documentUrl}>
-            <a href={summary.documentUrl} rel="noreferrer" target="_blank">
+            <a href={url} rel="noreferrer" target="_blank">
               <strong>{tag.label}</strong>
               <span>{brief(summary.summary)}</span>
               <small>↗</small>

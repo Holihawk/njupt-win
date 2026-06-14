@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from "vitest";
-import { apiEndpoints, withApiFailover } from "../src/api-pool.js";
+import { apiEndpoints, withApiFailover } from "../src/ai/api-pool.js";
 
 const original = {
   urls: process.env.LLM_API_URLS,

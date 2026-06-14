@@ -4,3 +4,5 @@ node_modules/
 *.tsbuildinfo
 next-env.d.ts
 data/notice-refresh-report.json
+data/crawl-report.json
+data/notice-refresh.lock

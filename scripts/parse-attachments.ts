@@ -3,7 +3,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import ExcelJS from "exceljs";
 import mammoth from "mammoth";
-import { getPool, transaction } from "../src/db.js";
+import { getPool, transaction } from "../src/database/db.js";
 import { USER_AGENT } from "../src/crawler/utils.js";
 
 const parserVersion = "attachment-parser-v1";

@@ -2,10 +2,10 @@ import { CalendarCard } from "../components/calendar-card";
 import { NoticeList } from "../components/notice-list";
 import { RagChat } from "../components/rag-chat";
 import { SummaryDigest } from "../components/summary-digest";
-import { getCalendarStatus, loadCalendarConfig } from "../src/calendar";
-import { loadDocuments, recentNotices } from "../src/notices";
-import { hasLlmConfig, loadSummaries, selectRecentSummaries } from "../src/summaries";
-import { hasRagConfig } from "../src/rag";
+import { getCalendarStatus, loadCalendarConfig } from "../src/content/calendar";
+import { loadDocuments, recentNotices } from "../src/content/notices";
+import { hasLlmConfig, loadSummaries, selectRecentSummaries } from "../src/summary/summaries";
+import { hasRagConfig } from "../src/rag/index";
 
 export const dynamic = "force-dynamic";
 

@@ -1,11 +1,14 @@
-import type { HybridSearchResult } from "../src/hybrid-search";
+import type { HybridSearchResult } from "../src/search/hybrid-search";
+import { safePublicUrl } from "../src/security/safe-url";
 
 export function SearchResults({ results }: { results: HybridSearchResult[] }) {
   if (results.length === 0) return <p className="empty">暂无符合条件的内容</p>;
 
   return (
     <div className="smart-results">
-      {results.map((result) => (
+      {results.map((result) => {
+        const resultUrl = safePublicUrl(result.url);
+        return (
         <article className="smart-result-card" key={result.documentId}>
           <div className="notice-meta">
             <span>{result.sourceName} · {blockLabel(result.blockType)}</span>
@@ -15,30 +18,35 @@ export function SearchResults({ results }: { results: HybridSearchResult[] }) {
           <p>{result.snippet}</p>
           {result.evidences.length > 0 && (
             <div className="evidence-list">
-              {result.evidences.map((evidence, index) => (
+              {result.evidences.map((evidence, index) => {
+                const evidenceUrl = safePublicUrl(evidence.assetUrl) ?? resultUrl;
+                if (!evidenceUrl) return null;
+                return (
                 <a
                   className={`evidence-chip evidence-${evidence.type}`}
-                  href={evidence.assetUrl ?? result.url}
+                  href={evidenceUrl}
                   key={`${evidence.type}-${index}`}
                   rel="noreferrer"
                   target="_blank"
                 >
-                  {evidence.type === "image" && evidence.assetUrl && (
-                    <img alt="" src={evidence.assetUrl} />
+                  {evidence.type === "image" && safePublicUrl(evidence.assetUrl) && (
+                    <img alt="" src={safePublicUrl(evidence.assetUrl)!} />
                   )}
                   <span>
                     <strong>{evidence.title}</strong>
                     {evidence.description && <small>{evidence.description}</small>}
                   </span>
                 </a>
-              ))}
+                );
+              })}
             </div>
           )}
-          <a href={result.url} rel="noreferrer" target="_blank">
+          {resultUrl && <a href={resultUrl} rel="noreferrer" target="_blank">
             查看原文 <span aria-hidden="true">↗</span>
-          </a>
+          </a>}
         </article>
-      ))}
+        );
+      })}
     </div>
   );
 }

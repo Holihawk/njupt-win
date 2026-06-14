@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { DocumentFields, SourceFields } from "../../components/admin-fields";
-import { requireAdmin } from "../../src/admin-auth";
-import { countAdminDocuments, listAdminDocuments, listAdminSources } from "../../src/admin-data";
+import { requireAdmin } from "../../src/admin/auth";
+import { countAdminDocuments, listAdminDocuments, listAdminSources } from "../../src/admin/data";
 import {
   archiveDocument,
   createDocument,

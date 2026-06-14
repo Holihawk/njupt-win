@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { ImportDraftFields } from "../../../components/admin-fields";
-import { requireAdmin } from "../../../src/admin-auth";
-import { importUrlDraft } from "../../../src/admin-import";
-import { listAdminSources } from "../../../src/admin-data";
+import { requireAdmin } from "../../../src/admin/auth";
+import { importUrlDraft } from "../../../src/admin/import";
+import { listAdminSources } from "../../../src/admin/data";
 import { createImportedDocument } from "../actions";
 
 export const dynamic = "force-dynamic";

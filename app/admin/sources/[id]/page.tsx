@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SourceFields } from "../../../../components/admin-fields";
-import { requireAdmin } from "../../../../src/admin-auth";
-import { getAdminSource } from "../../../../src/admin-data";
+import { requireAdmin } from "../../../../src/admin/auth";
+import { getAdminSource } from "../../../../src/admin/data";
 import { updateSource } from "../../actions";
 
 export default async function EditSourcePage({ params }: { params: Promise<{ id: string }> }) {

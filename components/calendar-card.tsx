@@ -3,7 +3,7 @@
 import type { CSSProperties, FormEvent } from "react";
 import { useEffect, useState } from "react";
 import { RiCalendarCloseFill, RiCalendarCloseLine, RiCalendarEventFill } from "react-icons/ri";
-import type { CalendarStatus } from "../src/calendar";
+import type { CalendarStatus } from "../src/content/calendar";
 import {
   createPersonalReminder,
   defaultPersonalReminders,
@@ -12,7 +12,7 @@ import {
   parsePersonalReminders,
   PERSONAL_REMINDERS_STORAGE_KEY,
   type PersonalReminder,
-} from "../src/personal-reminders";
+} from "../src/content/personal-reminders";
 
 /** 渲染校历进度，并在浏览器本地维护用户自己的备忘节点 */
 export function CalendarCard({ status }: { status: CalendarStatus | null }) {

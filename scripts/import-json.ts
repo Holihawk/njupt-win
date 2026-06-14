@@ -1,10 +1,10 @@
 import { readFile } from "node:fs/promises";
 import type { PoolClient } from "pg";
-import { transaction, getPool } from "../src/db.js";
+import { transaction, getPool } from "../src/database/db.js";
 import type { Document } from "../src/types.js";
-import type { NoticeSummary } from "../src/summaries.js";
+import type { NoticeSummary } from "../src/summary/summaries.js";
 import { sources } from "../src/crawler/sources.js";
-import type { EditableBlock } from "../src/admin-import.js";
+import type { EditableBlock } from "../src/admin/import.js";
 
 const documents = JSON.parse(await readFile("data/documents.json", "utf8")) as Document[];
 const summaries = JSON.parse(await readFile("data/notice-summaries.json", "utf8")) as NoticeSummary[];

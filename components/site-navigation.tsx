@@ -12,7 +12,7 @@ import {
 } from "react-icons/ri";
 import { ThemeSwitcher } from "./theme-switcher";
 
-/** 顶部导航根据当前页面切换线性/填充图标，并固定主题入口顺序。 */
+/** 顶部导航根据当前页面切换线性/填充图标，主题入口固定放在“关于”右侧。 */
 export function SiteNavigation() {
   const pathname = usePathname();
 
@@ -26,7 +26,6 @@ export function SiteNavigation() {
         line={<RiSearchLine />}
         label="搜索"
       />
-      <ThemeSwitcher />
       <NavLink
         active={pathname.startsWith("/about")}
         fill={<RiPokerHeartsFill />}
@@ -34,6 +33,7 @@ export function SiteNavigation() {
         line={<RiPokerHeartsLine />}
         label="关于"
       />
+      <ThemeSwitcher />
     </nav>
   );
 }

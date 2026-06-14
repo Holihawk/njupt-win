@@ -1,6 +1,6 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
-import { getPool } from "../src/db.js";
+import { getPool } from "../src/database/db.js";
 
 const pool = getPool();
 await pool.query(`

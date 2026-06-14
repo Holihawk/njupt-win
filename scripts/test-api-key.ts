@@ -1,5 +1,5 @@
-import { apiEndpoints, sanitizedEndpoint, type ApiEndpoint } from "../src/api-pool.js";
-import { expectedEmbeddingDimensions } from "../src/embeddings.js";
+import { apiEndpoints, sanitizedEndpoint, type ApiEndpoint } from "../src/ai/api-pool.js";
+import { expectedEmbeddingDimensions } from "../src/ai/embeddings.js";
 
 const testLlm = !process.argv.includes("--embedding-only");
 const testEmbedding = !process.argv.includes("--llm-only");
